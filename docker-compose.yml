@@ -1,0 +1,45 @@
+# docker-compose.yml
+
+version: "3.2"
+services:
+  flask-api:
+    build: ./api/
+    volumes:
+      - ./api/:/usr/src/app/
+    ports:
+      - 5000:5000
+    depends_on:
+      - redis
+    networks:
+      - redis-python-net
+    environment:
+      - URL=https://www.worldometers.info/coronavirus/
+      - REDIS_PASSWORD=covid
+      - REDIS_HOST=redis-cache
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+  redis:
+    container_name: redis-cache
+    image: "redis:alpine"
+    environment:
+      - REDIS_PASSWORD=covid
+      - REDIS_REPLICATION_MODE=master
+    ports:
+      - "6379:6379"
+    volumes:
+      # save redisearch data to your current working directory
+      - ./redis/redis-data:/data
+    command:
+      # Save if 100 keys are added in every 10 seconds
+      - "--save 10 100"
+      # Set password
+      - "--requirepass covid"
+    networks:
+      - redis-python-net
+volumes:
+  redis-data:
+
+
+networks:
+  redis-python-net:
+    external: true
