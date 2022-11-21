@@ -38,8 +38,6 @@ services:
       - redis-python-net
 volumes:
   redis-data:
-
-
 networks:
   redis-python-net:
     external: true
