@@ -7,5 +7,6 @@ The API can be run using a docker container. If you have docker installed, all y
 4. Finally, try the API out at `127.0.0.1:5000/`
 
 ```
-NOTE: If you have given a network name that is different to what I have specified in the .yml file. You must change it for the API to work.
+NOTE: If you have given a network name that is different to what I have specified in the .yml file. 
+You must change it for the API to work.
 ```
